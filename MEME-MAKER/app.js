@@ -3,12 +3,17 @@ const textInput=document.getElementById("text");
 const fileInput=document.getElementById("file");
 const eraserBtn=document.getElementById("eraser-btn");
 const modeBtn=document.getElementById("mode-btn");
+const drawModeBtn=document.getElementById("draw-mode-btn");
+const boldBtn=document.getElementById("bold-btn");
 const destroyBtn=document.getElementById("destroy-btn");
 const colorOptions = Array.from(//foreach를 돌려면 배열이 필요하므로 Array.from을 사용해 배열로 변환.
   document.getElementsByClassName("color-option")//배열이 아닌 Element collection을 반환함.
 );
 const color = document.getElementById("color");
 const lineWidth = document.getElementById("line-width");
+const fontSizeInput=document.getElementById("font-size");
+// const textColor = document.getElementById("text-color");
+const fontSelector=document.getElementById("font-selector");
 const canvas = document.querySelector("canvas");
 //캔버스에 그릴 때 사용할 붓 = context
 //자주 사용하게 될 테니 되도록 짧게 context ->ctx
@@ -25,6 +30,11 @@ ctx.lineCap="round"; //butt,round, square로 지정 가능 그어지는 선끝 �
 let isPainting = false;
 let isFilling=false;
 let isErasing=false;
+let isLine=false;
+let isBold=false;
+
+let fontSize=fontSizeInput.value;
+let fontName=fontSelector.value//'Press Start 2P';
 
 function onMove(event) {
   if (isPainting) {
@@ -41,6 +51,9 @@ function startPainting() {
 
 function cancelPainting() {
   isPainting = false;
+  if(!isLine){
+    ctx.fill();
+  }
   ctx.beginPath();
 }
 
@@ -52,6 +65,10 @@ function onCanvasClick(){
 
 function onLineWidthChange(event) {
   ctx.lineWidth = event.target.value;
+}
+
+function onFontSizeChange(event){
+  fontSize=event.target.value;
 }
 
 function changeColorSetting(colorValue)
@@ -80,9 +97,21 @@ function onModeClick(){
   if(isFilling){
     isFilling=false;
     modeBtn.innerText="Fill";
+    drawModeBtn.classList.remove("invisibles");
   } else{
     isFilling=true;
     modeBtn.innerText="Draw";
+    drawModeBtn.classList.add("invisibles");
+  }
+}
+
+function onDrawModeClick(){
+  if(isLine){
+    isLine=false;
+    drawModeBtn.innerText="Line";
+  } else{
+    isLine=true;
+    drawModeBtn.innerText="Shape";
   }
 }
 
@@ -117,9 +146,13 @@ function onDoubleClick(event){
   if(text!==""){
     ctx.save();//현재 상태, 색상, 스타일 등을 저장
     ctx.lineWidth=1;
-    ctx.font="68px 'Press Start 2P'";// size, font-family
-    // ctx.font="48px serif";
-    // ctx.strokeText(text,event.offsetX,event.offsetY);
+    if(isBold){
+      ctx.font=`bold ${fontSize}px '${fontName}'`;
+    }else{
+      ctx.font=`${fontSize}px '${fontName}'`;//"68px 'Press Start 2P'";// size, font-family
+      // ctx.font="48px serif";
+      // ctx.strokeText(text,event.offsetX,event.offsetY);
+    }
     ctx.fillText(text,event.offsetX,event.offsetY);
     ctx.restore();//저장한 것 불러오기
   }
@@ -134,6 +167,24 @@ function onSaveClick(){
   a.click();
 }
 
+function onBoldClick(){
+  if(isBold){
+    isBold=false;
+    boldBtn.innerText="Bold";
+  }else{
+    isBold=true;
+    boldBtn.innerText="Normal";
+  }
+}
+
+// function onTextColorChange(event){
+//   ctx.font.color=event.target.value;
+// }
+
+function onFontSelectorChange(event){
+  fontName=event.target.value;
+}
+
 canvas.addEventListener("dblclick",onDoubleClick);
 // canvas.addEventListener("click", onClick);
 canvas.addEventListener("mousemove", onMove);
@@ -143,11 +194,16 @@ canvas.addEventListener("mouseleave", cancelPainting);
 canvas.addEventListener("click",onCanvasClick);
 
 lineWidth.addEventListener("change", onLineWidthChange);
+fontSizeInput.addEventListener("change",onFontSizeChange);
 color.addEventListener("change", onColorChange);
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 
 modeBtn.addEventListener("click",onModeClick);
+drawModeBtn.addEventListener("click",onDrawModeClick);
 destroyBtn.addEventListener("click",onDestroyClick);
 eraserBtn.addEventListener("click",onEraseClick);
 fileInput.addEventListener("change",onFileChange);
 saveBtn.addEventListener("click",onSaveClick);
+boldBtn.addEventListener("click",onBoldClick);
+// textColor.addEventListener("change",onTextColorChange);
+fontSelector.addEventListener("change",onFontSelectorChange);

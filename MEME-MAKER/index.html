@@ -35,9 +35,10 @@
     <span>Pencil Width</span>
     <!-- <button id="moveBtn" class="moveBtn">modeChange</button> -->
     <!-- range 슬라이더, min,max 최소 최대값, value 기본값, step 값 변화 단위-->
-    <input id="line-width" type="range" min="1" max="10" value="5" step="0,1" />
+    <input id="line-width" type="range" min="1" max="10" value="5" step="0.1" />
     
     <button id="mode-btn">🩸Fill</button>
+    <button id="draw-mode-btn" class="draw-mode-btn">Line</button>
     <button id="destroy-btn">💥💣Destroy</button>
     <button id="eraser-btn">❌Erase</button>
     <!-- accept 받아들이는 파일의 종류 제한. img/*는 포멧 상관 없이 이미지만 받아들인다는 의미이다.-->
@@ -50,6 +51,21 @@
     </label>
     <button id="save">🎁Save image</button>
     <input type="text" placeholder="Add text here... :)" id="text"/>
+    <span>Font Size</span>
+    <input id="font-size" type="range" min="10" max="120" value="68" step="1" />
+    <button id="bold-btn">Bold</button>
+    <!-- <span>Text Color</span> -->
+    <!-- <input type="color" id="text-color" /> -->
+    <span>Font Selector</span>
+    <select id="font-selector">
+      <option> Serif </option>
+      <option> Arial </option>
+      <option> Sans-Serif </option>                                  
+      <option> Tahoma </option>
+      <option> Verdana </option>
+      <option> Lucida Sans Unicode </option>    
+      <option> Press Start 2P </option>                               
+    </select>
   </div>
   <script src="app.js"></script>
 </body>

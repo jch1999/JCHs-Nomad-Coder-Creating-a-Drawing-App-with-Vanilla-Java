@@ -96,3 +96,7 @@ input#text{
 input#file{
   display: none;
 }
+
+.invisibles{
+  display: none;
+}
