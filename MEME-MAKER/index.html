@@ -11,16 +11,12 @@
 
 
 <body>
-  <!-- <button id="moveBtn" class="moveBtn">modeChange</button> -->
-  <!-- range 슬라이더, min,max 최소 최대값, value 기본값, step 값 변화 단위-->
-  <input id="line-width" type="range" min="1" max="10" value="5" step="0,1" />
-  <input type="color" id="color" />
-  <canvas></canvas>
   <!-- shift+alt+i로 여러 줄 동시 선택이 가능하다고 하는데 vscode에서 가능한 거 같다 나주에 해보자.-->
   <!-- html 요소 안에, data- 를 사용하면 원하는 문자열 데이터를 얼마든지 넣을 수 있다
   예를 들어 아래의 data-color는 color: "#1abc9c" 같은 식으로 저장된다.
   다른 예를 들어 data-potato는 potato: "sfasfasf" 같은 식으로 저장될 것이다-->
-  <div>
+  <div class="color-options">
+    <input type="color" id="color" />
     <div class="color-option" style="background-color: #1abc9c" ; data-color="#1abc9c"></div>
     <div class="color-option" style="background-color: #2ecc71" ; data-color="#2ecc71"></div>
     <div class="color-option" style="background-color: #9b59b6" ; data-color="#9b59b6"></div>
@@ -34,9 +30,27 @@
     <div class="color-option" style="background-color: #ff9f1a" ; data-color="#ff9f1a"></div>
     <div class="color-option" style="background-color: #fff200" ; data-color="#fff200"></div>
   </div>
-  <button id="mode-btn">Fill</button>
-  <button id="destroy-btn">Destroy</button>
-  <button id="eraser-btn">Erase</button>
+  <canvas></canvas>
+  <div class="btns">
+    <span>Pencil Width</span>
+    <!-- <button id="moveBtn" class="moveBtn">modeChange</button> -->
+    <!-- range 슬라이더, min,max 최소 최대값, value 기본값, step 값 변화 단위-->
+    <input id="line-width" type="range" min="1" max="10" value="5" step="0,1" />
+    
+    <button id="mode-btn">🩸Fill</button>
+    <button id="destroy-btn">💥💣Destroy</button>
+    <button id="eraser-btn">❌Erase</button>
+    <!-- accept 받아들이는 파일의 종류 제한. img/*는 포멧 상관 없이 이미지만 받아들인다는 의미이다.-->
+    <!-- file input은꾸미기가 어렵다. label감싸서 감추고 가짜를 보여줄 수는 있다고 한다.-->
+    <!-- for의 값이 id의 값과 같으면 해당 id의 요소에 접근하는 역할을 수행한다? 두 요소의 거리는 상관 없음.-->
+    <!-- label안에 없어도 됨.-->
+    <label for="file">
+      📩Add Photo
+      <input type="file" accept="image/*" id="file"/>
+    </label>
+    <button id="save">🎁Save image</button>
+    <input type="text" placeholder="Add text here... :)" id="text"/>
+  </div>
   <script src="app.js"></script>
 </body>
 
